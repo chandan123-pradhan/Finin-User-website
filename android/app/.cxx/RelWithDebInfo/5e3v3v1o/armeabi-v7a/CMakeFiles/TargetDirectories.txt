@@ -1,0 +1,2 @@
+/Users/kaushikikumari/Downloads/naukri_user/android/app/.cxx/RelWithDebInfo/5e3v3v1o/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/kaushikikumari/Downloads/naukri_user/android/app/.cxx/RelWithDebInfo/5e3v3v1o/armeabi-v7a/CMakeFiles/rebuild_cache.dir
