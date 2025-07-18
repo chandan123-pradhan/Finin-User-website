@@ -9,6 +9,8 @@ import 'package:naukri_user/local_storage/share_pref_key.dart';
 import 'package:naukri_user/local_storage/shared_pref.dart';
 import 'package:naukri_user/models/employment_data_model.dart';
 import 'package:naukri_user/module/dashboard/provider/dashboard_provider.dart';
+import 'package:naukri_user/module/home/ui/widgets/navbar_widget.dart';
+import 'package:naukri_user/module/home/ui/widgets/profile_performance_widget.dart';
 import 'package:naukri_user/module/splash/provider/splash_provider_controller.dart';
 import 'package:naukri_user/services/web_services.dart';
 import 'package:naukri_user/services/web_services_constant.dart';
@@ -27,42 +29,7 @@ class ProfileDetailPage extends StatelessWidget {
       backgroundColor: ColorUtils.white,
       body: Consumer<DashboardProvider>(builder: (context, controller, child) {
         return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            iconTheme: IconThemeData(
-              size: 16,
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Center(
-                    child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 32,
-                    // width: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0),
-                      child: Text(
-                        "Edit profile",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-              ),
-            ],
-          ),
+          backgroundColor: ColorUtils.lightGray,
           body: SafeArea(
             child: SingleChildScrollView(
               child: SizedBox(
@@ -70,62 +37,24 @@ class ProfileDetailPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 1,
-                                  color: ColorUtils.lightGray,
-                                ),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        WebServicesConstant.baseUrl +
-                                            controller
-                                                .getProfileDetailsApiResponse
-                                                !.data
-                                                .user
-                                                .profileImageUrl),
-                                    fit: BoxFit.fill)),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: headingH3(
-                                    text: controller
-                                        .getProfileDetailsApiResponse
-                                        !.data
-                                        .user
-                                        .fullName,
-                                    context: context),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: headingH6(
-                                    text: controller
-                                        .getProfileDetailsApiResponse
-                                        !.data
-                                        .user
-                                        .emailId,
-                                    color: Colors.black,
-                                    context: context),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                    NavbarWidget(),
+                    SizedBox(
+                      height: 20,
                     ),
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: displayWeight(context) / 8,
+                        ),
+                        child: _getTopProfileBar(
+                            context: context, controller: controller)),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    aboutMe(context: context, controller: controller),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _careerPrefrences(context: context, controller: controller),
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 0.0, vertical: 14.0),
@@ -135,227 +64,6 @@ class ProfileDetailPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 0),
-                                child: Container(
-                                  // height: displayHeight(context)/3.8,
-                                  width: displayWeight(context),
-
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.primaryBlue
-                                        .withOpacity(0.05),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 0.5,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 15),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              headingH5(
-                                                  text: 'About me',
-                                                  context: context),
-                                              // ImageUtils.getImage(
-                                              //     image: ImageUtils.EditIcon,
-                                              //     height: 15)
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 0, vertical: 0),
-                                            child: headingH6(
-                                                text: controller
-                                                    .getProfileDetailsApiResponse
-                                                    !.data
-                                                    .user
-                                                    .description,
-                                                context: context,
-                                                isSelectable: true,
-                                                color: ColorUtils.blackColor),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 20),
-                                child: Container(
-                                  // height: displayHeight(context)/3.8,
-                                  width: displayWeight(context),
-
-                                  decoration: BoxDecoration(
-                                    color: ColorUtils.primaryBlue
-                                        .withOpacity(0.05),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        blurRadius: 1.0,
-                                        spreadRadius: 0.5,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 15),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              headingH5(
-                                                  text: 'Career preferences',
-                                                  context: context),
-                                              // ImageUtils.getImage(
-                                              //     image: ImageUtils.EditIcon,
-                                              //     height: 15)
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              headingH10(
-                                                  text: 'Preferred Location',
-                                                  context: context),
-                                              SizedBox(
-                                                height: 3,
-                                              ),
-                                              headingH6(
-                                                  text: controller
-                                                      .getProfileDetailsApiResponse
-                                                      !.data
-                                                      .user
-                                                      .prefferedLocation,
-                                                  context: context)
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  headingH10(
-                                                      text:
-                                                          'Preferred annual salary',
-                                                      context: context),
-                                                  SizedBox(
-                                                    height: 3,
-                                                  ),
-                                                  headingH6(
-                                                      text:
-                                                          '₹ ${controller.getProfileDetailsApiResponse!.data.user.prefferedSallary}',
-                                                      context: context)
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  headingH10(
-                                                      text: 'Employment type',
-                                                      context: context),
-                                                  SizedBox(
-                                                    height: 3,
-                                                  ),
-                                                  headingH6(
-                                                      text: controller
-                                                          .getProfileDetailsApiResponse
-                                                          !.data
-                                                          .user
-                                                          .employmentType,
-                                                      context: context)
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  headingH10(
-                                                      text: 'Job type',
-                                                      context: context),
-                                                  SizedBox(
-                                                    height: 3,
-                                                  ),
-                                                  headingH6(
-                                                      text: controller
-                                                          .getProfileDetailsApiResponse!
-                                                          .data
-                                                          .user
-                                                          .employmentType,
-                                                      context: context)
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  headingH10(
-                                                      text: 'Preferred shift',
-                                                      context: context),
-                                                  SizedBox(
-                                                    height: 3,
-                                                  ),
-                                                  headingH6(
-                                                      text:
-                                                          '${controller.getProfileDetailsApiResponse!.data.user.prefferedShift}           ',
-                                                      context: context)
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                              ),
                               _buildBasicDetailsCard(context),
                               SizedBox(
                                 height: 20,
@@ -431,15 +139,15 @@ class ProfileDetailPage extends StatelessWidget {
   _buildBasicDetailsCard(context) {
     return Consumer<DashboardProvider>(builder: (context, controller, child) {
       return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
+        padding: EdgeInsets.symmetric(
+          horizontal: displayWeight(context) / 8,
         ),
         child: Container(
           // height: displayHeight(context)/3.8,
           width: displayWeight(context),
 
           decoration: BoxDecoration(
-            color: ColorUtils.primaryBlue.withOpacity(0.05),
+            color: ColorUtils.white,
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
@@ -511,8 +219,8 @@ class ProfileDetailPage extends StatelessWidget {
                             height: 3,
                           ),
                           headingH6(
-                              text: controller.getProfileDetailsApiResponse!.data
-                                  .user.highestQualification,
+                              text: controller.getProfileDetailsApiResponse!
+                                  .data.user.highestQualification,
                               context: context)
                         ],
                       ),
@@ -545,15 +253,15 @@ class ProfileDetailPage extends StatelessWidget {
   _buildBasicEmployementCard(context) {
     return Consumer<DashboardProvider>(builder: (context, controller, child) {
       return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
+        padding: EdgeInsets.symmetric(
+          horizontal: displayWeight(context) / 8,
         ),
         child: Container(
           // height: displayHeight(context)/3.8,
           width: displayWeight(context),
 
           decoration: BoxDecoration(
-            color: ColorUtils.primaryBlue.withOpacity(0.05),
+            color: ColorUtils.white,
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
@@ -702,6 +410,291 @@ class ProfileDetailPage extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _getTopProfileBar(
+      {required BuildContext context, required DashboardProvider controller}) {
+    return Container(
+      height: displayHeight(context) / 3.5,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: ColorUtils.white),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Container(
+              height: displayHeight(context) / 6,
+              width: displayHeight(context) / 6,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 4, color: ColorUtils.green),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: NetworkImage(WebServicesConstant.baseUrl +
+                              controller.getProfileDetailsApiResponse!.data.user
+                                  .profileImageUrl),
+                          fit: BoxFit.fill)),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  // width: displayWeight(context)/8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          headingH4(
+                            text: controller.getProfileDetailsApiResponse!.data
+                                .user.fullName,
+                            context: context,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.mode_edit_outline_outlined,
+                            size: 20,
+                            color: ColorUtils.blackColor,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      controller.getProfileDetailsApiResponse!.data.user
+                              .employmentHistory.isEmpty
+                          ? SizedBox()
+                          : headingH5(
+                              text:
+                                  "${controller.getProfileDetailsApiResponse!.data.user.employmentHistory.last.designation} @ ${controller.getProfileDetailsApiResponse!.data.user.employmentHistory.last.employerName}",
+                              context: context,
+                            ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      headingH6(
+                          text: "Skills: "
+                              "${controller.getProfileDetailsApiResponse!.data.user.skills}",
+                          context: context,
+                          color: ColorUtils.blackColor),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      headingH6(
+                          text: "Locations: "
+                              "${controller.getProfileDetailsApiResponse!.data.user.prefferedLocation}",
+                          context: context,
+                          color: ColorUtils.blackColor),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      headingH6(
+                          text: "Contact No.: "
+                              "${controller.getProfileDetailsApiResponse!.data.user.mobileNumber}",
+                          context: context,
+                          color: ColorUtils.blackColor),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                    width: displayWeight(context) / 4,
+                    child: ProfilePerformanceWidget())
+              ],
+            ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget aboutMe(
+      {required BuildContext context, required DashboardProvider controller}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: displayWeight(context) / 8,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: ColorUtils.white),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    headingH5(text: 'About me', context: context),
+                    // ImageUtils.getImage(
+                    //     image: ImageUtils.EditIcon,
+                    //     height: 15)
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  child: headingH6(
+                      text: controller
+                          .getProfileDetailsApiResponse!.data.user.description,
+                      context: context,
+                      isSelectable: true,
+                      color: ColorUtils.blackColor),
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+
+  Widget _careerPrefrences(
+      {required BuildContext context, required DashboardProvider controller}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: displayWeight(context) / 8,
+      ),
+      child: Container(
+        // height: displayHeight(context)/3.8,
+        width: displayWeight(context),
+
+        decoration: BoxDecoration(
+          color: ColorUtils.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              blurRadius: 1.0,
+              spreadRadius: 0.5,
+            ),
+          ],
+        ),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    headingH5(text: 'Career preferences', context: context),
+                    // ImageUtils.getImage(
+                    //     image: ImageUtils.EditIcon,
+                    //     height: 15)
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    headingH10(text: 'Preferred Location', context: context),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    headingH6(
+                        text: controller.getProfileDetailsApiResponse!.data.user
+                            .prefferedLocation,
+                        context: context)
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        headingH10(
+                            text: 'Preferred annual salary', context: context),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        headingH6(
+                            text:
+                                '₹ ${controller.getProfileDetailsApiResponse!.data.user.prefferedSallary}',
+                            context: context)
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        headingH10(text: 'Employment type', context: context),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        headingH6(
+                            text: controller.getProfileDetailsApiResponse!.data
+                                .user.employmentType,
+                            context: context)
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        headingH10(text: 'Job type', context: context),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        headingH6(
+                            text: controller.getProfileDetailsApiResponse!.data
+                                .user.employmentType,
+                            context: context)
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        headingH10(text: 'Preferred shift', context: context),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        headingH6(
+                            text:
+                                '${controller.getProfileDetailsApiResponse!.data.user.prefferedShift}           ',
+                            context: context)
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ),
     );
   }
 }

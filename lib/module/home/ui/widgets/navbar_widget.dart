@@ -3,6 +3,7 @@ import 'package:naukri_user/common_widgets/text_field_widgets.dart';
 import 'package:naukri_user/common_widgets/text_widgets.dart';
 import 'package:naukri_user/module/dashboard/provider/dashboard_provider.dart';
 import 'package:naukri_user/services/web_services_constant.dart';
+import 'package:naukri_user/utils/app_routes.dart';
 import 'package:naukri_user/utils/color_utils.dart';
 import 'package:naukri_user/utils/image_utils.dart';
 import 'package:naukri_user/utils/size_utils.dart';
@@ -61,25 +62,30 @@ class NavbarWidget extends StatelessWidget {
                     ),
                     controller.getProfileDetailsApiResponse == null
                         ? SizedBox()
-                        : Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 1,
-                                  color: ColorUtils.lightGray,
-                                ),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        WebServicesConstant.baseUrl +
-                                            controller
-                                                .getProfileDetailsApiResponse!
-                                                .data
-                                                .user
-                                                .profileImageUrl),
-                                    fit: BoxFit.fill)),
-                          ),
+                        : InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, AppRoutes.profileDetailPage);
+                          },
+                          child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: 1,
+                                    color: ColorUtils.lightGray,
+                                  ),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          WebServicesConstant.baseUrl +
+                                              controller
+                                                  .getProfileDetailsApiResponse!
+                                                  .data
+                                                  .user
+                                                  .profileImageUrl),
+                                      fit: BoxFit.fill)),
+                            ),
+                        ),
                   ],
                 ),
               )

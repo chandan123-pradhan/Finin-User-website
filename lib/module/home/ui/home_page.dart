@@ -8,7 +8,9 @@ import 'package:naukri_user/common_widgets/text_widgets.dart';
 import 'package:naukri_user/module/dashboard/provider/dashboard_provider.dart';
 import 'package:naukri_user/module/home/ui/job_card_widget.dart';
 import 'package:naukri_user/module/home/ui/widgets/alert_widget.dart';
+import 'package:naukri_user/module/home/ui/widgets/home_page_jobs_tab_widget.dart';
 import 'package:naukri_user/module/home/ui/widgets/navbar_widget.dart';
+import 'package:naukri_user/module/home/ui/widgets/profile_performance_widget.dart';
 import 'package:naukri_user/module/home/widgets/carousel_with_dots.dart';
 import 'package:naukri_user/services/web_services_constant.dart';
 import 'package:naukri_user/utils/color_utils.dart';
@@ -74,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                                           height: 20,
                                         ),
                                         _recommendedJobs(),
-                                        _buildRecentJobs()
+                                       JobTabsWidget()
                                       ],
                                     ),
                                   ))),
@@ -175,7 +177,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildRecentJobs() {
-    return Consumer<DashboardProvider>(
+    return 
+    Consumer<DashboardProvider>(
       builder: (context, dashboardController, child) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,6 +215,8 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+ 
+ 
   }
 
   Widget _getLeftSideWidget(controller) {
@@ -298,127 +303,14 @@ class _HomePageState extends State<HomePage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Container(
-              // height: displayHeight(context) / 5,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue[50]),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Profile Performance",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Icon(Icons.info_outline, size: 16)
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Search\napperances",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "3535",
-                              style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 40,
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Recruiter\nactions",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "3535",
-                              style: TextStyle(
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(
-                            Icons.power_outlined,
-                            size: 35,
-                            color: Colors.black38,
-                          ),
-                          Text(
-                            "Get 3X to bost your\nprofileperformace",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Icon(
-                            Icons.navigate_next_outlined,
-                            size: 15,
-                            color: Colors.black45,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-          )
+            child:ProfilePerformanceWidget()
+            )
         ],
       ),
     );
   }
+
+
 
 
 
